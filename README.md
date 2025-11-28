@@ -1,2 +1,2 @@
 # todo-list
-Creating a restaurant homepage to practice DOM manipulation and bundling modules using webpack.
+Creating a todo-list to practice OOP principles.
