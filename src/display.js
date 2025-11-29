@@ -1,6 +1,6 @@
 import { allProjects } from "./allProjects.js";
 
-function addProject() {
+function addProject(name) {
 
 }
 
@@ -53,7 +53,7 @@ function projectForm() {
     input1.classList.add("projectInput");
 
     const label = document.createElement("label");
-    label.innerText("Title");
+    label.innerText = 'Title'
     input1.appendChild(label);
 
     const inputName = document.createElement("input");
@@ -67,17 +67,22 @@ function projectForm() {
     createBtn.innerHTML = "Create Project";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
+    createBtn.addEventListener("click", () => {
+        addProject(inputName.value);
+        loadProjects();
+    })
     form.appendChild(createBtn);
     dialog.append(form);
+    document.body.appendChild(dialog);
     dialog.showModal();
 }
 
 function todoForm() {
     const dialog = document.createElement("dialog");
-    dialog.classList.add("Todo Dialog");
+    dialog.classList.add("todoDialog");
 
     const header = document.createElement("div");
-    header.classList.add("Todo Header");
+    header.classList.add("todoHeader");
     const title = document.createElement("h1");
     title.innerText = "New Todo";
     header.appendChild(title);
@@ -100,8 +105,8 @@ function todoForm() {
     input1.classList.add("todoInput");
 
     const labelName = document.createElement("label");
-    label.innerText("Title");
-    input1.appendChild(label);
+    labelName.innerText = 'Title';
+    input1.appendChild(labelName);
 
     const inputName = document.createElement("input");
     inputName.type = 'text';
@@ -114,7 +119,7 @@ function todoForm() {
     input2.classList.add("todoInput");
 
     const labelDesc = document.createElement("label");
-    labelDesc.innerText("Description");
+    labelDesc.innerText = 'Description';
     input2.appendChild(labelDesc);
 
     const inputDesc = document.createElement("textarea");
@@ -126,7 +131,7 @@ function todoForm() {
     input3.classList.add("todoInput");
 
     const labelDate = document.createElement("label");
-    labelDate.innerText("Due Date");
+    labelDate.innerText = 'Due Date';
     input3.appendChild(labelDate);
 
     const inputDate = document.createElement("input");
@@ -139,7 +144,7 @@ function todoForm() {
     input4.classList.add("todoInput");
 
     const labelPriority = document.createElement("label");
-    labelPriority.innerText("Title");
+    labelPriority.innerText = 'Priority';
     input4.appendChild(labelPriority);
 
     const inputPriority = document.createElement("select");
@@ -164,8 +169,13 @@ function todoForm() {
     createBtn.innerHTML = "Create Todo";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
+    createBtn.addEventListener("click", () => {
+        addTodo();
+        loadTodos();
+    })
     form.appendChild(createBtn);
     dialog.append(form);
+    document.body.appendChild(dialog);
     dialog.showModal();
 }
 
@@ -177,9 +187,15 @@ function loadProjects() {
 
 }
 
-export { loadTodos, loadProjects }
+function setupEvents() {
+    const plusProject = document.querySelector('.addProject');
+    const plusTodo = document.querySelector('.addTodo');
 
-const plusProject = document.querySelector('.addProject');
-const plusTodo = document.querySelector('.addTodos');
+    plusTodo.addEventListener("click", todoForm);
+    plusProject.addEventListener("click", projectForm);
+}
+
+
+export { loadTodos, loadProjects, setupEvents };
 
 
