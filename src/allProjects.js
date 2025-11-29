@@ -22,4 +22,4 @@ class allProjects {
     getProjects = () => this.allProjects;
 }
 
-export { allProjects }
+export { allProjects };

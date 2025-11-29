@@ -20,4 +20,4 @@ class todo {
     }
 }
 
-export { todo }
+export { todo };
