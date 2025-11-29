@@ -8,8 +8,8 @@ class todo {
         this.status = false;
     }
 
-    setComplete() {
-        this.status = true;
+    toggle() {
+        this.status = !this.status;
     }
 
     update(newTodo) {
