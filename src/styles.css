@@ -30,7 +30,7 @@
     background-color: transparent;
 }
 
-.todos {
+.todo {
     display: grid;
     grid-template-rows: 100px 1fr;
     min-height: 100vh;
