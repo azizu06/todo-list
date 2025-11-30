@@ -1,28 +1,34 @@
 import { allProjects } from "./allProjects.js";
 
-function addProject(name) {
+const myProjects = new allProjects();
 
+function newProject(name) {
+    myProjects.addProject(name);
 }
 
-
-function addTodo() {
-
+function newTodo(info, target) {
+    const targetProject = myProjects.findProject(target);
+    targetProject.addTodo(info);
 }
 
-function editTodo() {
-
+function editTodo(tProject, tTodo) {
+    const targetProject = myProjects.findProject(tProject);
+    targetProject.updateTodos(tTodo, newInfo);
 }
 
-function deleteTodo() {
-
+function deleteTodo(tProject, tTodo) {
+    const targetProject = myProjects.findProject(tProject);
+    targetProject.removeTodo(tTodo);
 }
 
-function editProject() {
-
+function editProject(tProject, name) {
+    const targetProject = myProjects.findProject(tProject);
+    targetProject.update(name);
 }
 
-function deleteProject() {
-
+function deleteProject(tProject) {
+    const targetProject = myProjects.findProject(tProject);
+    myProjects.removeProject(targetProject);
 }
 
 function projectForm() {
@@ -68,13 +74,19 @@ function projectForm() {
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
     createBtn.addEventListener("click", () => {
-        addProject(inputName.value);
+        newProject(inputName.value);
         loadProjects();
     })
     form.appendChild(createBtn);
     dialog.append(form);
     document.body.appendChild(dialog);
     dialog.showModal();
+}
+
+function changeStatus(tProject, tTodo) {
+    const targetProject = myProjects.findProject(tProject);
+    const targetTodo = targetProject.findTodo(tTodo);
+    targetTodo.toggle();
 }
 
 function todoForm() {
