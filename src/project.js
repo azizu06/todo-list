@@ -7,8 +7,8 @@ class project {
         this.id = crypto.randomUUID();
     }
 
-    update(newInfo) {
-        if(newInfo.name !== undefined) this.name = newInfo.name;
+    update(newName) {
+        if(newName !== undefined) this.name = newName;
     }
 
     addTodo(info) {
@@ -22,14 +22,19 @@ class project {
     }
 
     removeTodo(info) {
-        this.project = project.filter(item => item.id !== info.id)
+        this.project = project.filter(item => item.id !== info.dataset.id)
     }
 
     getTodos = () => this.project;
 
     updateTodos(target, newTodo) {
-        const targetTodo = this.project.find(item => item.id === target.id)
+        const targetTodo = this.project.find(item => item.id === target.dataset.id);
         if (targetTodo) targetTodo.update(newTodo);
+    }
+
+    findTodo(target) {
+        const targetTodo = this.project.find(item => item.id === target.dataset.id);
+        return targetTodo;
     }
 }
 
