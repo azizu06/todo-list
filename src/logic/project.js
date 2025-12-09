@@ -1,5 +1,5 @@
 import { todo } from "./todo.js";
-
+import { compareAsc, parseISO } from "date-fns";
 class project {
     constructor(name) {
         this.project = [];
@@ -26,7 +26,7 @@ class project {
         this.project = this.project.filter(item => item.id !== id)
     }
 
-    getTodos = () => this.project;
+    getTodos = () => this.project.sort((a, b) => compareAsc(parseISO(a.dueDate), parseISO(b.dueDate)));
 
     updateTodos(id, newTodo) {
         const targetTodo = this.project.find(item => item.id === id);
