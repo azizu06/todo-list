@@ -11,6 +11,11 @@ class AllProjects {
         projects.push(newProject);
     }
 
+    restoreProject(name, id, status){
+        const newProject = new project(name, id, status);
+        projects.push(newProject);
+    }
+
     removeProject(id){
         projects = projects.filter(item => item.id !== id)
     }
@@ -30,7 +35,6 @@ class AllProjects {
         if(project) project.active = false;
         const newProject = projects.find(item => item.id === id);
         newProject.active = true;
-        return newProject
     }
 
     findActive(){
@@ -41,7 +45,6 @@ class AllProjects {
     getProjects = () => projects;
 }
 
-projects.push(new project("Default"));
 const allProjects = new AllProjects();
 
 export { allProjects };
