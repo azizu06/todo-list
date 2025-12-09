@@ -1,4 +1,5 @@
-function projectForm() {
+import { closeIcon } from "./icons.js";
+function projectForm(onSubmit) {
     const dialog = document.createElement("dialog");
     dialog.classList.add("projectDialog");
 
@@ -9,9 +10,8 @@ function projectForm() {
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    const xMark = document.createElement("i");
-    xMark.classList.add("mdi", "mdi-window-close");
-    closeBtn.appendChild(xMark);
+    closeBtn.innerHTML = closeIcon
+    closeBtn.classList.add("icon");
     closeBtn.addEventListener("click", () => {
         dialog.close();
     });
@@ -40,17 +40,19 @@ function projectForm() {
     createBtn.innerHTML = "Create Project";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
-    createBtn.addEventListener("click", () => {
-        newProject(inputName.value);
-        loadProjects();
-    })
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const name = inputName.value;
+        onSubmit(name);
+        dialog.close();
+    });
     form.appendChild(createBtn);
     dialog.append(form);
     document.body.appendChild(dialog);
     dialog.showModal();
 }
 
-function todoForm() {
+function todoForm(onSubmit) {
     const dialog = document.createElement("dialog");
     dialog.classList.add("todoDialog");
 
@@ -61,9 +63,8 @@ function todoForm() {
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    const xMark = document.createElement("i");
-    xMark.classList.add("mdi", "mdi-window-close");
-    closeBtn.appendChild(xMark);
+    closeBtn.classList.add("icon");
+    closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
     });
@@ -142,9 +143,16 @@ function todoForm() {
     createBtn.innerHTML = "Create Todo";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
-    createBtn.addEventListener("click", () => {
-        addTodo();
-        loadTodos();
+    form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const todo = {
+            title: inputName.value,
+            dueDate: inputDate.value,
+            description: inputDesc.value,
+            priority: inputPriority.value
+        }
+        onSubmit(todo);
+        dialog.close();
     })
     form.appendChild(createBtn);
     dialog.append(form);
@@ -152,4 +160,4 @@ function todoForm() {
     dialog.showModal();
 }
 
-export { projectForm, todoForm }
+export { projectForm, todoForm };
