@@ -7,11 +7,13 @@ function loadTodos(tProject) {
     mainContainer.innerHTML = "";
     const project = allProjects.findProject(tProject);
     if(!project) return;
-    
+
     const todos = project.getTodos();
     todos.forEach(todo => {
         const container = document.createElement("div");
         const checkBox = document.createElement("button");
+        const icons = document.createElement("div");
+        const todoName = document.createElement("div");
         const row1 = document.createElement("div");
         const row2 = document.createElement("div");
         const row3 = document.createElement("div");
@@ -38,13 +40,12 @@ function loadTodos(tProject) {
         });
 
         checkBox.addEventListener("click", (e) => {
+            e.stopPropagation();
             const todo = e.target.closest(".todo").dataset.id;
             changeTodoStatus(tProject, todo);
-            const check = document.createElement("button");
-            check.innerHTML = checkIcon;
-            check.classList.toggle("icon");
-            checkBox.appendChild(check);
-            checkBox.classList.toggle("checked");
+            const project = allProjects.findProject(tProject);
+            const curTodo = project.findTodo(todo);
+            checkBox.innerHTML = (curTodo.status) ? "" : checkIcon;
             title.classList.toggle("striked");
         });
 
@@ -62,16 +63,20 @@ function loadTodos(tProject) {
         date.innerText = todo.dueDate;
         desc.innerText = todo.description;
         container.dataset.id = todo.id;
-        row1.appendChild(checkBox);
-        row1.appendChild(title);
-        row1.appendChild(editBtn);
-        row1.appendChild(deleteBtn);
+        todoName.appendChild(checkBox);
+        todoName.appendChild(title);
+        icons.appendChild(editBtn);
+        icons.appendChild(deleteBtn);
+        row1.appendChild(todoName);
+        row1.appendChild(icons);
         row2.appendChild(date);
         row3.appendChild(desc);
         row1.classList.add("todoRow");
         row2.classList.add("todoRow");
         row3.classList.add("extraRow");
-        checkBox.classList.add("circle");
+        checkBox.classList.add("icon");
+        icons.classList.add("containerIcon");
+        todoName.classList.add("todoInfo");
         container.classList.add("todo");
         container.appendChild(row1);
         container.appendChild(row2);
