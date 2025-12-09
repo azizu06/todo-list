@@ -3,8 +3,19 @@ import { projectForm, todoForm } from "./forms.js";
 import { loadProjects } from './projectRender.js';
 import { loadTodos } from "./todoRender.js";
 import { upTodo, upProject } from "./updateForm.js";
+import { saveAll, loadAll } from "../logic/storage.js";
 
 function setup() {
+    const rawProjects = loadAll();
+    if(!rawProjects) allProjects.addProject("Default");
+    rawProjects.forEach(item => {
+        allProjects.restoreProject(item.name, item.id, item.active);
+        const project = allProjects.findProject(item.id);
+        const rawTodos = item.project;
+        rawTodos.forEach(todo => {
+            project.restoreTodo(todo);
+        });
+    });
     const plusProject = document.querySelector('.addProject');
     const plusTodo = document.querySelector('.addTodo');
 
@@ -16,7 +27,8 @@ function setup() {
     plusProject.addEventListener("click", handleAddProject);
     loadProjects();
     const project = allProjects.findActive();
-    setTitle(project.id);
+    if(project) setTitle(project.id);
+    if(project) loadTodos(project.id);
 }
 
 function setTitle(id){
@@ -36,6 +48,7 @@ function handleEditProject(projectID){
         project.update(newData);
         loadProjects();
         setTitle(projectID);
+        saveAll(allProjects.getProjects());
     });
 }
 
@@ -44,6 +57,7 @@ function handleEditTodo(projectID, todoID){
     upTodo(projectID, todoID, (newData) => {
         project.updateTodos(todoID, newData);
         loadTodos(projectID);
+        saveAll(allProjects.getProjects());
     });
 }
 
@@ -52,6 +66,7 @@ function handleAddTodo(projectID){
     todoForm((newData) => {
         project.addTodo(newData);
         loadTodos(projectID);
+        saveAll(allProjects.getProjects());
     });
 }
 
@@ -62,6 +77,7 @@ function handleAddProject(){
         const project = allProjects.findActive();
         setTitle(project.id);
         loadTodos(project.id);
+        saveAll(allProjects.getProjects());
     });
 }
 
@@ -69,6 +85,7 @@ function handleDeleteTodo(projectID, todoID){
     const project = allProjects.findProject(projectID); 
     project.removeTodo(todoID);
     loadTodos(projectID);
+    saveAll(allProjects.getProjects());
 }
 
 function handleDeleteProject(projectID){
@@ -76,12 +93,14 @@ function handleDeleteProject(projectID){
     loadProjects();
     loadTodos(projectID);
     setTitle(projectID);
+    saveAll(allProjects.getProjects());
 }
 
 function changeTodoStatus(tProject, tTodo) {
     const targetProject = allProjects.findProject(tProject);
     const targetTodo = targetProject.findTodo(tTodo);
     targetTodo.toggle();
+    saveAll(allProjects.getProjects());
 }
 
 export { setup, setTitle, handleEditProject, handleEditTodo, handleAddProject, handleAddTodo, handleDeleteProject, handleDeleteTodo, changeTodoStatus };
