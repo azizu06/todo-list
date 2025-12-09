@@ -7,12 +7,12 @@ function upProject(project, onSubmit) {
 
     const header = document.createElement("div");
     header.classList.add("projectHeader");
-    const title = document.createElement("h1");
+    const title = document.createElement("h2");
     title.innerText = "New Project";
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    closeBtn.classList.add("icon");
+    closeBtn.classList.add("closeBtn");
     closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
@@ -63,12 +63,12 @@ function upTodo(projectID, todoID, onSubmit) {
 
     const header = document.createElement("div");
     header.classList.add("todoHeader");
-    const title = document.createElement("h1");
+    const title = document.createElement("h2");
     title.innerText = "New Todo";
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    closeBtn.classList.add("icon");
+    closeBtn.classList.add("closeBtn");
     closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
@@ -103,6 +103,7 @@ function upTodo(projectID, todoID, onSubmit) {
     input2.appendChild(labelDesc);
 
     const inputDesc = document.createElement("textarea");
+    inputDesc.style.resize = "none";
     inputDesc.placeholder = "Enter description";
     inputDesc.value = todo.description;
     input2.appendChild(inputDesc);

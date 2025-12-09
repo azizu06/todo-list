@@ -6,13 +6,13 @@ function projectForm(onSubmit) {
 
     const header = document.createElement("div");
     header.classList.add("projectHeader");
-    const title = document.createElement("h1");
+    const title = document.createElement("h2");
     title.innerText = "New Project";
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    closeBtn.innerHTML = closeIcon
-    closeBtn.classList.add("icon");
+    closeBtn.innerHTML = closeIcon;
+    closeBtn.classList.add("closeBtn");
     closeBtn.addEventListener("click", () => {
         dialog.close();
     });
@@ -59,12 +59,12 @@ function todoForm(onSubmit) {
 
     const header = document.createElement("div");
     header.classList.add("todoHeader");
-    const title = document.createElement("h1");
+    const title = document.createElement("h2");
     title.innerText = "New Todo";
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    closeBtn.classList.add("icon");
+    closeBtn.classList.add("icon", "closeBtn");
     closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
@@ -98,6 +98,7 @@ function todoForm(onSubmit) {
     input2.appendChild(labelDesc);
 
     const inputDesc = document.createElement("textarea");
+    inputDesc.style.resize = "none";
     inputDesc.placeholder = "Enter description";
     input2.appendChild(inputDesc);
     form.appendChild(input2);
@@ -126,15 +127,18 @@ function todoForm(onSubmit) {
     inputPriority.required = true;
 
     const optionLow = document.createElement("option");
-    optionLow.innerText = "Low"
+    optionLow.innerText = "Low";
+    optionLow.value = "Low";
     inputPriority.appendChild(optionLow);
 
     const optionMedium = document.createElement("option");
     optionMedium.innerText = "Medium";
+    optionMedium.value = "Medium";
     inputPriority.appendChild(optionMedium);
 
     const optionHigh = document.createElement("option");
     optionHigh.innerText = "High";
+    optionHigh.value = "High";
     inputPriority.appendChild(optionHigh);
 
     input4.appendChild(inputPriority);
