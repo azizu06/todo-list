@@ -1,4 +1,4 @@
-import { allProjects } from "../logic/allProjects";
+import { allProjects } from "../logic/allProjects.js";
 import { closeIcon } from "./icons.js";
 
 function upProject(project, onSubmit) {
