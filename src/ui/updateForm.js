@@ -1,6 +1,6 @@
-import { editProject, loadProjects } from "./projectRender.js";
-
-function upProject(target) {
+import { allProjects } from "../logic/allProjects";
+import { closeIcon } from "./icons.js";
+function upProject(project, onSubmit) {
     const dialog = document.createElement("dialog");
     dialog.classList.add("projectDialog");
 
@@ -11,9 +11,8 @@ function upProject(target) {
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    const xMark = document.createElement("i");
-    xMark.classList.add("mdi", "mdi-window-close");
-    closeBtn.appendChild(xMark);
+    closeBtn.classList.add("icon");
+    closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
     });
@@ -35,6 +34,7 @@ function upProject(target) {
     inputName.type = 'text';
     inputName.required = true;
     inputName.placeholder = "Enter project name";
+    inputName.value = project.name;
     input1.appendChild(inputName);
     form.appendChild(input1);
 
@@ -42,17 +42,21 @@ function upProject(target) {
     createBtn.innerHTML = "Update Project";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
-    createBtn.addEventListener("click", () => {
-        editProject(target, inputName.value);
-        loadProjects();
-    })
+    createBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const newName = inputName.value;
+        onSubmit(newName);
+        dialog.close();
+    });
     form.appendChild(createBtn);
     dialog.append(form);
     document.body.appendChild(dialog);
     dialog.showModal();
 }
 
-function upTodo(tProject, tTodo) {
+function upTodo(projectID, todoID, onSubmit) {
+    const project = allProjects.findProject(projectID);
+    const todo = project.findTodo(todoID);
     const dialog = document.createElement("dialog");
     dialog.classList.add("todoDialog");
 
@@ -63,9 +67,8 @@ function upTodo(tProject, tTodo) {
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    const xMark = document.createElement("i");
-    xMark.classList.add("mdi", "mdi-window-close");
-    closeBtn.appendChild(xMark);
+    closeBtn.classList.add("icon");
+    closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();
     });
@@ -87,6 +90,7 @@ function upTodo(tProject, tTodo) {
     inputName.type = 'text';
     inputName.required = true;
     inputName.placeholder = "Enter todo name";
+    inputName.value = todo.title;
     input1.appendChild(inputName);
     form.appendChild(input1);
 
@@ -99,6 +103,7 @@ function upTodo(tProject, tTodo) {
 
     const inputDesc = document.createElement("textarea");
     inputDesc.placeholder = "Enter description";
+    inputDesc.value = todo.description;
     input2.appendChild(inputDesc);
     form.appendChild(input2);
 
@@ -112,6 +117,7 @@ function upTodo(tProject, tTodo) {
     const inputDate = document.createElement("input");
     inputDate.type = 'date';
     inputDate.required = true;
+    inputDate.value = todo.dueDate;
     input3.appendChild(inputDate);
     form.appendChild(input3);
 
@@ -123,6 +129,7 @@ function upTodo(tProject, tTodo) {
     input4.appendChild(labelPriority);
 
     const inputPriority = document.createElement("select");
+    inputPriority.value = todo.priority;
     inputPriority.required = true;
 
     const optionLow = document.createElement("option");
@@ -144,14 +151,21 @@ function upTodo(tProject, tTodo) {
     createBtn.innerHTML = "Update Todo";
     createBtn.type = "submit";
     createBtn.classList.add("addItem");
-    createBtn.addEventListener("click", () => {
-        editTodo(tProject, tTodo);
-        loadTodos(tProject);
-    })
+    createBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const newTodo = {
+            title: inputName.value,
+            dueDate: inputDate.value,
+            description: inputDesc.value,
+            priority: inputPriority.value
+        };
+        onSubmit(newTodo);
+        dialog.close();
+    });
     form.appendChild(createBtn);
     dialog.append(form);
     document.body.appendChild(dialog);
     dialog.showModal();
 }
 
-export { upProject, upTodo }
+export { upProject, upTodo };
