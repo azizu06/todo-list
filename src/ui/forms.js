@@ -64,7 +64,7 @@ function todoForm(onSubmit) {
     header.appendChild(title);
 
     const closeBtn = document.createElement("button");
-    closeBtn.classList.add("icon", "closeBtn");
+    closeBtn.classList.add("closeBtn");
     closeBtn.innerHTML = closeIcon;
     closeBtn.addEventListener("click", () => {
         dialog.close();

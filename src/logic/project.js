@@ -32,7 +32,8 @@ class project {
             info.description,
             info.dueDate,
             info.priority,
-            info.status
+            info.status,
+            info.id,
         );
         this.project.push(newTodo);
     }
