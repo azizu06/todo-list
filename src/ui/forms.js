@@ -1,4 +1,5 @@
-import { closeIcon } from "./icons.js";
+import { closeIcon } from "./icons.js";  
+
 function projectForm(onSubmit) {
     const dialog = document.createElement("dialog");
     dialog.classList.add("projectDialog");

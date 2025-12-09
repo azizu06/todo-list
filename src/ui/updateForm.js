@@ -1,5 +1,6 @@
 import { allProjects } from "../logic/allProjects";
 import { closeIcon } from "./icons.js";
+
 function upProject(project, onSubmit) {
     const dialog = document.createElement("dialog");
     dialog.classList.add("projectDialog");
@@ -155,8 +156,8 @@ function upTodo(projectID, todoID, onSubmit) {
         e.preventDefault();
         const newTodo = {
             title: inputName.value,
-            dueDate: inputDate.value,
             description: inputDesc.value,
+            dueDate: inputDate.value,
             priority: inputPriority.value
         };
         onSubmit(newTodo);
