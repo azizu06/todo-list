@@ -1,6 +1,7 @@
 import { allProjects } from "../logic/allProjects.js";
 import { handleEditTodo, handleDeleteTodo, changeTodoStatus } from "./display.js";
 import { checkIcon, editIcon, deleteIcon } from "./icons.js";
+import { format, parseISO, isPast } from "date-fns";  
 
 function loadTodos(tProject) {
     const mainContainer = document.querySelector(".todos");
@@ -59,8 +60,18 @@ function loadTodos(tProject) {
             }
         });
 
+        if(isPast(parseISO(todo.dueDate))){
+            date.classList.add("overDue");
+        }
+        if(!isPast(parseISO(todo.dueDate)) && date.classList.contains("overDue")){
+            date.classList.remove("overDue");
+        }
+
+        container.classList.remove("Low", "Medium", "High");
+        container.classList.add(todo.priority);
+
         title.innerText = todo.title;
-        date.innerText = todo.dueDate;
+        date.innerText = format(parseISO(todo.dueDate),"MMM d, yyyy");
         desc.innerText = todo.description;
         container.dataset.id = todo.id;
         todoName.appendChild(checkBox);
