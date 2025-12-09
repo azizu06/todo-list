@@ -19,8 +19,15 @@ function loadTodos(tProject) {
         const row2 = document.createElement("div");
         const row3 = document.createElement("div");
         const title = document.createElement("h3");
-        const date = document.createElement("p");
-        const desc = document.createElement("p");
+        const date = document.createElement("h4");
+        const desc = document.createElement("h4");
+        const priorityRow = document.createElement("div");
+        const priorityBadge = document.createElement("span");
+
+        if(todo.status){
+            checkBox.innerHTML = checkIcon;
+            title.classList.add("striked");
+        } 
 
         const editBtn = document.createElement("button");
         editBtn.innerHTML = editIcon
@@ -46,8 +53,13 @@ function loadTodos(tProject) {
             changeTodoStatus(tProject, todo);
             const project = allProjects.findProject(tProject);
             const curTodo = project.findTodo(todo);
-            checkBox.innerHTML = (curTodo.status) ? "" : checkIcon;
-            title.classList.toggle("striked");
+            checkBox.innerHTML = (curTodo.status) ? checkIcon : "";
+            if(curTodo.status){
+                title.classList.add("striked");
+            }
+            else{
+                title.classList.remove("striked");
+            }
         });
 
         container.addEventListener("click", (e) => {
@@ -73,6 +85,10 @@ function loadTodos(tProject) {
         title.innerText = todo.title;
         date.innerText = format(parseISO(todo.dueDate),"MMM d, yyyy");
         desc.innerText = todo.description;
+        priorityBadge.innerText = todo.priority;
+        priorityBadge.classList.add("todo-priority", todo.priority.toLowerCase());
+        priorityRow.appendChild(priorityBadge);
+        priorityRow.classList.add("priorityRow");
         container.dataset.id = todo.id;
         todoName.appendChild(checkBox);
         todoName.appendChild(title);
@@ -81,6 +97,7 @@ function loadTodos(tProject) {
         row1.appendChild(todoName);
         row1.appendChild(icons);
         row2.appendChild(date);
+        row2.appendChild(priorityRow);
         row3.appendChild(desc);
         row1.classList.add("todoRow");
         row2.classList.add("todoRow");
@@ -88,6 +105,7 @@ function loadTodos(tProject) {
         checkBox.classList.add("icon");
         icons.classList.add("containerIcon");
         todoName.classList.add("todoInfo");
+        priorityRow.classList.add("priorityRow");
         container.classList.add("todo");
         container.appendChild(row1);
         container.appendChild(row2);
