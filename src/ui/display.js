@@ -16,6 +16,8 @@ function setup() {
     })
     plusProject.addEventListener("click", handleAddProject);
     loadProjects();
+    const project = allProjects.findActive();
+    setTitle(project.id);
 }
 
 function setTitle(id){
