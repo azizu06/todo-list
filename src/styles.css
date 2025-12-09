@@ -21,24 +21,22 @@
 
 .projects {
     display: flex;
+    flex-direction: column;
+    gap: 25px;
     justify-content: space-between;
 }
 
 .addProject {
-    font-size: 25px;
-    border: none;
-    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    display: flex;
 }
 
-.todo {
+.todos {
     display: grid;
-    grid-template-rows: 100px 1fr;
-    min-height: 100vh;
-    height: auto
-}
-
-.content {
-
+    height: auto;
+    padding: 10px 25px;
+    gap: 50px;
 }
 
 .header {
@@ -47,9 +45,89 @@
     padding: 20px 30px;
 }
 
-.addItem {
+.addItem, .addTodo {
     width: 120px;
     height: 35px;
     border-radius: 10px;
     font-size: 16px;
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+
+}
+
+.project:hover {
+    color: pink;
+}
+
+.project {
+    display: flex;
+    justify-content: space-between;
+}
+
+.projectMainHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.containerIcon {
+    display: flex;
+    gap: 10px;
+}
+
+.projectDialog, .todoDialog {
+    margin: auto;
+    padding: 20px 25px;
+}
+
+.projectDialog {
+    height: 250px;
+    width: 300px;
+}
+
+.projectDialog::backdrop, .todoDialog::backdrop {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.projectHeader, .todoHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.projectForm, .todoForm{
+    display: flex;
+    gap: 35px;
+    flex-direction: column;
+    padding: 20px
+}
+
+.projectInput, .todoInput {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.todo {
+    display: flex;
+    flex-direction: column;
+    border: 3px solid red;
+    padding: 20px;
+    gap: 20px;
+}
+
+.todoRow {
+    display: flex;
+    justify-content: space-between;
+}
+
+.todoInfo {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
