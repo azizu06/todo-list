@@ -1,15 +1,19 @@
 import { todo } from "./todo.js";
 import { compareAsc, parseISO } from "date-fns";
 class project {
-    constructor(name) {
+    constructor(name, id, status) {
         this.project = [];
         this.name = name;
-        this.id = crypto.randomUUID();
-        this.active = true;
+        this.id = (id) ? id : crypto.randomUUID();
+        this.active = (status) ? status : false;
     }
 
     update(newName) {
         if(newName !== undefined) this.name = newName;
+    }
+
+    editID(id){
+        this.id = id;
     }
 
     addTodo(info) {
@@ -18,6 +22,17 @@ class project {
             info.description,
             info.dueDate,
             info.priority
+        );
+        this.project.push(newTodo);
+    }
+
+    restoreTodo(info){
+        const newTodo = new todo(
+            info.title,
+            info.description,
+            info.dueDate,
+            info.priority,
+            info.status
         );
         this.project.push(newTodo);
     }
