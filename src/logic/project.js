@@ -12,10 +12,6 @@ class project {
         if(newName !== undefined) this.name = newName;
     }
 
-    editID(id){
-        this.id = id;
-    }
-
     addTodo(info) {
         const newTodo = new todo(
             info.title,
