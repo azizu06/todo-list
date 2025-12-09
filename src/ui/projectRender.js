@@ -1,19 +1,7 @@
-import { allProjects } from "./logic/allProjects.js";
-import { upProject } from "./updateForm.js";
-
-function newProject(name) {
-    allProjects.addProject(name);
-}
-
-function editProject(tProject, name) {
-    const targetProject = allProjects.findProject(tProject);
-    targetProject.update(name);
-}
-
-function deleteProject(tProject) {
-    const targetProject = allProjects.findProject(tProject);
-    allProjects.removeProject(targetProject);
-}
+import { allProjects } from "../logic/allProjects.js";
+import { handleEditProject, handleDeleteProject, setTitle } from "./display.js";
+import { loadTodos } from "./todoRender.js";
+import { editIcon, deleteIcon } from "./icons.js";
 
 function loadProjects() {
     const projects = allProjects.getProjects();
@@ -22,30 +10,44 @@ function loadProjects() {
 
     projects.forEach(project => {
         const container = document.createElement("div");
+        const containerIcon = document.createElement("div");
         const title = document.createElement("h3");
 
-        const editIcon = document.createElement("i");
-        editIcon.classList.add("mdi", "mdi-pencil-box-outline", "editDelete");
-        editIcon.addEventListener("click", (e) => {
-            const project = e.target.closest(".project");
-            upProject(project);
+        const editBtn = document.createElement("button");
+        editBtn.innerHTML = editIcon
+        editBtn.classList.add("icon");
+        editBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const project = e.target.closest(".project").dataset.id;
+            handleEditProject(project);
+            setTitle(project);
         });
 
-        const deleteIcon = document.createElement("i");
-        deleteIcon.classList.add("mdi", "mdi-delete-outline", "editDelete");
-        deleteIcon.addEventListener("click", (e) => {
-            const project = e.target.closest(".project");
-            deleteProject(project);
+        const deleteBtn = document.createElement("button");
+        deleteBtn.innerHTML = deleteIcon
+        deleteBtn.classList.add("icon");
+        deleteBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const id = e.target.closest(".project").dataset.id;
+            handleDeleteProject(id);
+        });
+
+        container.dataset.id = project.id;
+        container.addEventListener("click", () => {
+            setTitle(container.dataset.id);
+            allProjects.setActive(container.dataset.id);
+            loadTodos(container.dataset.id);
         });
 
         title.innerText = project.name;
-        container.dataset.id = project.id;
-        container.appendchild(title);
-        container.appendchild(editIcon);
-        container.appendchild(deleteIcon);
+        container.appendChild(title);
+        containerIcon.appendChild(editBtn);
+        containerIcon.appendChild(deleteBtn);
+        container.appendChild(containerIcon)
         container.classList.add("project");
+        containerIcon.classList.add("containerIcon");
         mainContainer.append(container);
     });
 }
 
-export { newProject, editProject, deleteProject, loadProjects };
+export { loadProjects };
